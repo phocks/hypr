@@ -26,6 +26,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      <h1>Hello there!</h1>
+
       <Button variant="contained" color="primary">
         Hello World
       </Button>

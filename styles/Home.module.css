@@ -1,20 +1,6 @@
-/* .container {
-  margin: 0;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-.content {
-  flex-grow: 1;
+.container {
   margin: 1rem;
-  border: 1px solid #ddd;
-  min-height: 100%;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-} */
+}
 
 /* .container {
   min-height: 100vh;
