@@ -1,11 +1,22 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Button } from "@material-ui/core";
 
 export default function Home() {
+  const [message, setMessage] = useState("");
+
+  async function init() {
+    const data = await fetch("/api/hello")
+      .then((response) => response.json())
+      .catch((e) => console.error(e));
+
+    setMessage(data.name);
+  }
+
   useEffect(() => {
-    console.log("Mounted!");
+    init();
   }, []);
 
   return (
@@ -15,10 +26,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className={styles.content}>
-        <h1>A title</h1>
-        <p>Some content.</p>
-      </div>
+      <Button variant="contained" color="primary">
+        Hello World
+      </Button>
     </div>
   );
 }
