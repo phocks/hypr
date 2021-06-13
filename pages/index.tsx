@@ -5,22 +5,27 @@ import { Button, TextField } from "@material-ui/core";
 import Login from "../components/Login";
 
 export default function Home() {
-  const [message, setMessage] = useState("");
+  const [email, setEmail] = useState("");
 
   async function init() {
     const data = await fetch("/api/hello")
       .then((response) => response.json())
       .catch((e) => console.error(e));
 
-    setMessage(data.name);
+    console.log(data);
   }
 
   useEffect(() => {
     init();
   }, []);
 
-  function handleChange(event) {
-    console.log(event);
+  async function handleChange(event) {
+    setEmail(event.target.value);
+  }
+
+  async function handleSubmit(event) {
+    console.log(email);
+    event.preventDefault();
   }
 
   return (
@@ -32,9 +37,11 @@ export default function Home() {
 
       {/* <h1>Hello there!</h1> */}
 
-      <TextField onChange={handleChange} />
+      <form onSubmit={handleSubmit}>
+        <TextField onChange={handleChange} />
+      </form>
 
-      <Login />
+      {/* <Login /> */}
 
       {/* <Button variant="contained" color="primary">
         Hello World
