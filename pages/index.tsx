@@ -1,8 +1,8 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-
 import { useEffect, useState } from "react";
-import { Button } from "@material-ui/core";
+import { Button, TextField } from "@material-ui/core";
+import Login from "../components/Login";
 
 export default function Home() {
   const [message, setMessage] = useState("");
@@ -19,6 +19,10 @@ export default function Home() {
     init();
   }, []);
 
+  function handleChange(event) {
+    console.log(event);
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -26,11 +30,15 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <h1>Hello there!</h1>
+      {/* <h1>Hello there!</h1> */}
 
-      <Button variant="contained" color="primary">
+      <TextField onChange={handleChange} />
+
+      <Login />
+
+      {/* <Button variant="contained" color="primary">
         Hello World
-      </Button>
+      </Button> */}
     </div>
   );
 }
