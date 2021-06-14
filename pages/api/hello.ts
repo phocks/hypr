@@ -20,9 +20,10 @@ export default (req, res) => {
     },
     function (err, data, res) {
       console.log(err);
+
+      // TODO: Make this a Promise
+      res.statusCode = 200;
+      res.json({ name: "Joshua Byrd" });
     }
   );
-
-  res.statusCode = 200;
-  res.json({ name: "Joshua Byrd" });
 };
