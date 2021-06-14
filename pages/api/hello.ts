@@ -15,7 +15,7 @@ export default (req, res) => {
       to: "phocks@gmail.com",
       from: '"Hypr Support" <info@hypr.gq>',
       subject: "Your code",
-      // message: "Hello there.",
+      message: "Hello there.",
       altText: `Your OTP is: 7463`,
     },
     function (err, data, res) {
