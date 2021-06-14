@@ -18,7 +18,7 @@ export default (req, res) => {
       message: "Hello there.",
       altText: `Your OTP is: 7463`,
     },
-    function (err, data, res) {
+     (err, emailData, emailRes) => {
       console.log(err);
 
       // TODO: Make this a Promise
