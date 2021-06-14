@@ -38,7 +38,7 @@ export default function Home() {
       {/* <h1>Hello there!</h1> */}
 
       <form onSubmit={handleSubmit}>
-        <TextField onChange={handleChange} type="email" />
+        <TextField onChange={handleChange} type="email" label="email" />
       </form>
 
       {/* <Login /> */}

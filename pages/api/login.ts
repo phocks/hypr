@@ -1,13 +1,12 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
-const ses = require("node-ses");
+import ses from "node-ses";
+
 const client = ses.createClient({
   key: process.env.SES_KEY,
   secret: process.env.SES_SECRET,
   amazon: "https://email.us-east-2.amazonaws.com",
 });
-
-console.log(process.env.DB_HOST);
 
 export default (req, res) => {
   client.sendEmail(
@@ -15,8 +14,8 @@ export default (req, res) => {
       to: "phocks@gmail.com",
       from: '"Hypr Support" <info@hypr.gq>',
       subject: "Your code",
-      // message: "Hello there.",
-      altText: `Your OTP is: 7463`,
+      message: `Your OTP is: 7463`,
+      // altText: `Your OTP is: 7463`,
     },
     function (err, data, res) {
       console.log(err);
