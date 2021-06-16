@@ -20,7 +20,7 @@ const sendEmailPromise = (options) => {
 
 // Encrypt
 const ciphertext = CryptoJS.AES.encrypt(
-  "phocks@gmail.com",
+  "phocks@hotmail.com",
   process.env.EMAIL_LOGIN_ENCRYPTION_MASTER_KEY
 ).toString();
 
