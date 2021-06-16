@@ -18,25 +18,31 @@ const sendEmailPromise = (options) => {
   });
 };
 
+var data = { email: "phocks@gmail.com" };
+
 // Encrypt
 const ciphertext = CryptoJS.AES.encrypt(
-  "phocks@hotmail.com",
+  JSON.stringify(data),
   process.env.EMAIL_LOGIN_ENCRYPTION_MASTER_KEY
 ).toString();
 
 // Decrypt
-var bytes = CryptoJS.AES.decrypt(ciphertext, process.env.EMAIL_LOGIN_ENCRYPTION_MASTER_KEY);
-var originalText = bytes.toString(CryptoJS.enc.Utf8);
+var bytes = CryptoJS.AES.decrypt(
+  ciphertext,
+  process.env.EMAIL_LOGIN_ENCRYPTION_MASTER_KEY
+);
 
-console.log(originalText); // 'my message'
+const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+
+console.dir(decryptedData);
 
 export default async (req, res) => {
   await sendEmailPromise({
     to: "phocks@gmail.com",
     from: '"Hypr Support" <info@hypr.gq>',
-    subject: "Your code",
-    message: ciphertext + " " + originalText,
-    altText: `Your OTP is: 7463`,
+    subject: "Your login code",
+    message: ciphertext,
+    altText: ciphertext,
   });
 
   res.statusCode = 200;
