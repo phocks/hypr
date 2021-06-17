@@ -30,7 +30,7 @@ export default function Home() {
 
     const res = await fetch("/api/send-login-email", {
       body: JSON.stringify({
-        email: email,
+        email: email
       }),
       headers: {
         "Content-Type": "application/json",

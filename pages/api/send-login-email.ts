@@ -18,8 +18,6 @@ const sendEmailPromise = (options) => {
   });
 };
 
-var data = { email: "phocks@gmail.com" };
-
 // Decrypt
 // var bytes = CryptoJS.AES.decrypt(
 //   ciphertext,
@@ -33,18 +31,28 @@ export default async (req, res) => {
     const body = req.body;
     const email = req.body.email;
 
+    console.log(body);
+
+    const data = {
+      email: email,
+      time: Math.floor(Date.now() / 1000),
+    };
+
     // Encrypt
-    const ciphertext = CryptoJS.AES.encrypt(
-      JSON.stringify(body),
+    const encryptedData = CryptoJS.AES.encrypt(
+      JSON.stringify(data),
       process.env.EMAIL_LOGIN_ENCRYPTION_MASTER_KEY
     ).toString();
+
+    const uri = `https://hypr.gq/?x=${encryptedData}`;
+    const encodedUri = encodeURI(uri);
 
     await sendEmailPromise({
       to: email,
       from: '"Hypr Support" <info@hypr.gq>',
       subject: `Your login code for ${email}`,
-      message: ciphertext,
-      altText: ciphertext,
+      message: `<p>Someone (hopefully you) has requested a login code.<p><p><a href="${encodedUri}">Click to login</a></p>`,
+      altText: encodedUri,
     });
 
     res.statusCode = 200;
