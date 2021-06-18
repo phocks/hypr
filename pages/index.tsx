@@ -2,7 +2,6 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import { useEffect, useState } from "react";
 import { Button, TextField } from "@material-ui/core";
-import Login from "../components/Login";
 
 export default function Home() {
   const [email, setEmail] = useState("");
@@ -30,7 +29,7 @@ export default function Home() {
 
     const res = await fetch("/api/send-login-email", {
       body: JSON.stringify({
-        email: email
+        email: email,
       }),
       headers: {
         "Content-Type": "application/json",
@@ -44,23 +43,13 @@ export default function Home() {
   };
 
   return (
-    <div className={styles.container}>
+    <div className="flex-container">
       <Head>
         <title>Hypr</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {/* <h1>Hello there!</h1> */}
-
-      <form onSubmit={handleSubmit}>
-        <TextField onChange={handleChange} type="email" label="email" />
-      </form>
-
-      {/* <Login /> */}
-
-      {/* <Button variant="contained" color="primary">
-        Hello World
-      </Button> */}
+      <h1>Hypr</h1>
     </div>
   );
 }
