@@ -3,7 +3,6 @@ import styles from "../styles/Login.module.css";
 import { useEffect, useState } from "react";
 import { Button, TextField } from "@material-ui/core";
 
-
 export default function Login() {
   const [email, setEmail] = useState("");
 
@@ -53,8 +52,6 @@ export default function Login() {
           <TextField onChange={handleChange} type="email" label="email" />
         </form>
       </div>
-
-      {/* <Login /> */}
 
       {/* <Button variant="contained" color="primary">
         Hello World
