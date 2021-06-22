@@ -8,11 +8,6 @@ import styles from "../styles/Home.module.css";
 function Home() {
   const [isLoggedIn, setIsLockedIn] = useState(false);
 
-  const handleLoginSubmit = async (event) => {
-    console.log(event);
-    event.preventDefault();
-  };
-
   return (
     <div className="flex-container">
       <Head>
@@ -22,12 +17,26 @@ function Home() {
 
       <Formik
         initialValues={{ email: "" }}
-        onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
+        onSubmit={async (values, { setSubmitting }) => {
+          // setTimeout(() => {
+          //   alert(JSON.stringify(values, null, 2));
 
-            setSubmitting(false);
-          }, 400);
+          //   setSubmitting(false);
+          // }, 400);
+
+          const res = await fetch("/api/send-login-email", {
+            body: JSON.stringify({
+              email: values.email,
+            }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+            method: "POST",
+          });
+      
+          const result = await res.json();
+      
+          console.log(result);
         }}
       >
         {({
