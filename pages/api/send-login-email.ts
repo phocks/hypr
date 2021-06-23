@@ -18,14 +18,6 @@ const sendEmailPromise = (options) => {
   });
 };
 
-// Decrypt
-// var bytes = CryptoJS.AES.decrypt(
-//   ciphertext,
-//   process.env.EMAIL_LOGIN_ENCRYPTION_MASTER_KEY
-// );
-
-// const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
-
 export default async (req, res) => {
   if (req.method === "POST") {
     const body = req.body;
@@ -44,8 +36,8 @@ export default async (req, res) => {
       process.env.EMAIL_LOGIN_ENCRYPTION_MASTER_KEY
     ).toString();
 
-    const uri = `https://hypr.gq/?x=${encryptedData}`;
-    const encodedUri = encodeURI(uri);
+    const uri = `https://hypr.gq/?login=${encodeURIComponent(encryptedData)}`;
+    const encodedUri = uri;
 
     await sendEmailPromise({
       to: email,
