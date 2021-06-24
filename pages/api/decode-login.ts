@@ -3,12 +3,13 @@ const CryptoJS = require("crypto-js");
 export default async (req, res) => {
   if (req.method === "POST") {
     const body = req.body;
-    const loginEncoded = body.login;
+    const loginEncrypted = decodeURIComponent(body.login);
 
     console.log(body);
+    console.log(loginEncrypted)
 
     const bytes = CryptoJS.AES.decrypt(
-      loginEncoded,
+      loginEncrypted,
       process.env.EMAIL_LOGIN_ENCRYPTION_MASTER_KEY
     );
 
