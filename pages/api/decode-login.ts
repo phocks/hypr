@@ -1,6 +1,6 @@
 const CryptoJS = require("crypto-js");
 
-export default (req, res) => {
+export default async (req, res) => {
   if (req.method === "POST") {
     const body = req.body;
     const loginEncrypted = decodeURIComponent(body.login);
@@ -17,7 +17,7 @@ export default (req, res) => {
       res.statusCode = 200;
       res.json({ message: `Email logged in ${decryptedData.email}` });
     } catch (e) {
-      res.statusCode = 500;
+      res.statusCode = 200;
       res.json({ message: "Invalid login detected..." });
     }
   } else {
