@@ -2,13 +2,22 @@ import { Button } from "@material-ui/core";
 import useSWR from "swr";
 
 const LoginButton = () => {
-  const fetcher = (args) => fetch(args).then((res) => res.json());
-  const { data, error } = useSWR("/api/login", fetcher);
-
-  console.log(data);
-
-  const handleLogin = (event) => {
+  const handleLogin = async (event) => {
     console.log("clicked");
+
+    const res = await fetch("/api/login", {
+      body: JSON.stringify({
+        email: "phocks@gmail.com",
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+    });
+
+    const result = await res.json();
+
+    console.log(result);
   };
 
   return (

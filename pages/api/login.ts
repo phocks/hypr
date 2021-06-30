@@ -1,13 +1,14 @@
 import { withIronSession } from "next-iron-session";
 
 async function handler(req, res) {
+  console.log(req.body)
+  const { email } = await req.body;
   // get user from database then:
   req.session.set("user", {
-    id: 230,
-    admin: true,
+    email: email,
   });
   await req.session.save();
-  res.send("Logged in");
+  res.send({ message: "Logged in" });
 }
 
 export default withIronSession(handler, {
