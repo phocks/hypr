@@ -3,26 +3,28 @@ import { useState, useEffect } from "react";
 import useSWR from "swr";
 import { useRouter } from "next/router";
 
+// CSS Modules
+import styles from "../styles/Home.module.scss";
+
 // Local components
+import Layout from "../components/Layout";
 import LoginForm from "../components/LoginForm";
 import LoginButton from "../components/LoginButton";
-
-import styles from "../styles/Home.module.css";
 
 const Home = (props) => {
   // const [isLoggedIn, setIsLockedIn] = useState(false);
   const router = useRouter();
 
-  const postFetcher = (url) =>
-    fetch(url, {
-      body: JSON.stringify({
-        login: router.query.login,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-    }).then((r) => r.json());
+  // const postFetcher = (url) =>
+  //   fetch(url, {
+  //     body: JSON.stringify({
+  //       login: router.query.login,
+  //     }),
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     method: "POST",
+  //   }).then((r) => r.json());
 
   // const shouldFetch = typeof router.query.login !== "undefined";
 
@@ -31,19 +33,25 @@ const Home = (props) => {
   //   postFetcher
   // );
 
-  const { data, error } = useSWR("/api/user", postFetcher);
+  // const { data, error } = useSWR("/api/user", postFetcher);
 
-  if (data) console.log(data);
+  // if (data) console.log(data);
+
+  const onMount = async () => {};
+
+  useEffect(() => {
+    onMount;
+  }, []);
 
   return (
-    <div className="flex-container">
+    <Layout>
       <Head>
         <title>Hypr</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <LoginButton />
-    </div>
+      Hello!
+      {/* <LoginButton /> */}
+    </Layout>
   );
 };
 

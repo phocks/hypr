@@ -1,4 +1,4 @@
-import "../styles/globals.css";
+import "../styles/globals.scss";
 import "@fontsource/roboto";
 import CssBaseline from "@material-ui/core/CssBaseline";
 
