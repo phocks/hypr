@@ -7,7 +7,7 @@ import fetchJson from "../lib/fetchJson";
 const Login = () => {
   // here we just check if user is already logged in and redirect to profile
   const { mutateUser } = useUser({
-    redirectTo: "/profile-sg",
+    redirectTo: "/user",
     redirectIfFound: true,
   });
 
@@ -17,7 +17,7 @@ const Login = () => {
     event.preventDefault();
 
     const body = {
-      username: event.currentTarget.username.value,
+      username: "phocks"
     };
 
     try {
@@ -37,7 +37,7 @@ const Login = () => {
   return (
     <Layout>
       <div className="login">
-        {/* <Form errorMessage={errorMsg} onSubmit={handleSubmit} /> */}
+        <form onSubmit={handleSubmit}><input defaultValue="Submit"></input></form>
       </div>
       <style jsx>{`
         .login {

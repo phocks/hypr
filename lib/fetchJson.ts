@@ -1,6 +1,6 @@
-export default async function fetchJson(args) {
+export default async function fetchJson(...args: Parameters<typeof fetch>) {
   try {
-    const response = await fetch(args);
+    const response = await fetch(...args);
 
     // if the server replies, there's always some data in json
     // if there's a network error, it will throw at the previous line

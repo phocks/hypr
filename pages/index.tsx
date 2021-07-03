@@ -37,10 +37,14 @@ const Home = (props) => {
 
   // if (data) console.log(data);
 
-  const onMount = async () => {};
+  const onMount = async () => {
+
+
+    console.log("Mounted...")
+  };
 
   useEffect(() => {
-    onMount;
+    onMount();
   }, []);
 
   return (
