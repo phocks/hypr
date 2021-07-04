@@ -59,7 +59,7 @@ const Home = (props) => {
         <title>Hypr</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      Hello!
+      Hello {user?.username}
       {/* <LoginButton /> */}
     </Layout>
   );
