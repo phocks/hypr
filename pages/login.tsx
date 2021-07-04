@@ -1,23 +1,23 @@
 import React, { useState } from "react";
 import useUser from "../lib/useUser";
 import Layout from "../components/Layout";
-// import Form from "../components/Form";
 import fetchJson from "../lib/fetchJson";
+import { Button } from "@material-ui/core";
 
 const Login = () => {
   // here we just check if user is already logged in and redirect to profile
   const { mutateUser } = useUser({
-    redirectTo: "/user",
+    redirectTo: "/",
     redirectIfFound: true,
   });
 
   const [errorMsg, setErrorMsg] = useState("");
 
-  async function handleSubmit(event) {
+  async function logUserIn(event) {
     event.preventDefault();
 
     const body = {
-      username: "phocks"
+      username: "phocks",
     };
 
     try {
@@ -26,7 +26,7 @@ const Login = () => {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(body),
-        }),
+        })
       );
     } catch (error) {
       console.error("An unexpected error happened:", error);
@@ -36,16 +36,20 @@ const Login = () => {
 
   return (
     <Layout>
-      <div className="login">
-        <form onSubmit={handleSubmit}><input defaultValue="Submit"></input></form>
-      </div>
+      {/* <form onSubmit={handleSubmit}><input defaultValue="Submit"></input></form> */}
+      <Button onClick={logUserIn} variant="outlined">
+        Log in
+      </Button>
+
       <style jsx>{`
-        .login {
+         {
+          /* .login {
           max-width: 21rem;
           margin: 0 auto;
           padding: 1rem;
           border: 1px solid #ccc;
           border-radius: 4px;
+        } */
         }
       `}</style>
     </Layout>

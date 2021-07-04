@@ -2,6 +2,7 @@ import Head from "next/head";
 import { useState, useEffect } from "react";
 import useSWR from "swr";
 import { useRouter } from "next/router";
+import useUser from "../lib/useUser";
 
 // CSS Modules
 import styles from "../styles/Home.module.scss";
@@ -12,8 +13,7 @@ import LoginForm from "../components/LoginForm";
 import LoginButton from "../components/LoginButton";
 
 const Home = (props) => {
-  // const [isLoggedIn, setIsLockedIn] = useState(false);
-  const router = useRouter();
+  const { user } = useUser({ redirectTo: "/login" });
 
   // const postFetcher = (url) =>
   //   fetch(url, {
@@ -38,14 +38,20 @@ const Home = (props) => {
   // if (data) console.log(data);
 
   const onMount = async () => {
+    console.log("Mounted...");
+  };
 
-
-    console.log("Mounted...")
+  const onUser = async () => {
+    console.log(user);
   };
 
   useEffect(() => {
     onMount();
   }, []);
+
+  useEffect(() => {
+    if (typeof user !== "undefined") onUser();
+  }, [user]);
 
   return (
     <Layout>
