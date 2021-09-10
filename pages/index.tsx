@@ -1,5 +1,15 @@
 import { useState, useEffect } from "react";
-import { useColorMode, Container, Button } from "@chakra-ui/react";
+import {
+  useColorMode,
+  Container,
+  Button,
+  SimpleGrid,
+  Box,
+  Heading,
+  Flex,
+  Spacer,
+} from "@chakra-ui/react";
+import { MoonIcon } from "@chakra-ui/icons";
 
 import styles from "../styles/Home.module.scss";
 
@@ -10,10 +20,17 @@ function Home() {
 
   return (
     <div className={styles.container}>
-      <Button onClick={toggleColorMode}>
-        Toggle {colorMode === "light" ? "Dark" : "Light"}
-      </Button>
-      <Container>Hello world!</Container>
+      <Container paddingTop="6">
+        <Flex>
+          <Spacer />
+          <Box>
+            <MoonIcon onClick={toggleColorMode} cursor={"pointer"} />
+          </Box>
+        </Flex>
+        <Box>
+          <Heading>Hello world!</Heading>
+        </Box>
+      </Container>
     </div>
   );
 }
