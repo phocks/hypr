@@ -1,4 +1,5 @@
-import { Input } from "@chakra-ui/react";
+import { Input, Button } from "@chakra-ui/react";
+import { ArrowForwardIcon } from "@chakra-ui/icons";
 
 function LinkInput({ ...props }) {
   return (
@@ -8,7 +9,10 @@ function LinkInput({ ...props }) {
         console.log("Submit!");
       }}
     >
-      <Input />
+      <Input my={2} />
+      <Button type="submit" rightIcon={<ArrowForwardIcon />}>
+        Submit
+      </Button>
     </form>
   );
 }

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useColorMode, Container } from "@chakra-ui/react";
+import { useColorMode, Container, Divider } from "@chakra-ui/react";
 import Head from "next/head";
 
 // Components
@@ -22,6 +22,7 @@ function Home() {
         <Container>
           <Nav />
           <LinkInput></LinkInput>
+          <Divider my={8} />
         </Container>
       </div>
     </>
