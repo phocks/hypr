@@ -10,6 +10,7 @@ import {
   Spacer,
 } from "@chakra-ui/react";
 import { MoonIcon } from "@chakra-ui/icons";
+import Head from "next/head";
 
 import styles from "../styles/Home.module.scss";
 
@@ -19,19 +20,24 @@ function Home() {
   useEffect(() => {}, []);
 
   return (
-    <div className={styles.container}>
-      <Container paddingTop="6">
-        <Flex>
-          <Spacer />
+    <>
+      <Head>
+        <title>Hypr</title>
+      </Head>
+      <div className={styles.container}>
+        <Container paddingTop="6">
+          <Flex>
+            <Spacer />
+            <Box>
+              <MoonIcon onClick={toggleColorMode} cursor={"pointer"} />
+            </Box>
+          </Flex>
           <Box>
-            <MoonIcon onClick={toggleColorMode} cursor={"pointer"} />
+            <Heading>Hello world!</Heading>
           </Box>
-        </Flex>
-        <Box>
-          <Heading>Hello world!</Heading>
-        </Box>
-      </Container>
-    </div>
+        </Container>
+      </div>
+    </>
   );
 }
 

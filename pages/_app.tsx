@@ -1,5 +1,5 @@
 import "../styles/globals.scss";
-import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import { ChakraProvider, extendTheme, ThemeConfig } from "@chakra-ui/react";
 
 const colors = {
   initialColorMode: "light",
@@ -11,11 +11,11 @@ const colors = {
   },
 };
 
-const theme = extendTheme({ colors });
+const config: ThemeConfig = extendTheme({ colors });
 
 function MyApp({ Component, pageProps }) {
   return (
-    <ChakraProvider theme={theme}>
+    <ChakraProvider theme={config}>
       <Component {...pageProps} />
     </ChakraProvider>
   );
