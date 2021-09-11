@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { useColorMode, Container, Stack, Text, Input } from "@chakra-ui/react";
+import { useColorMode, Container } from "@chakra-ui/react";
 import Head from "next/head";
 
 // Components
 import Nav from "../components/Nav";
+import LinkInput from "../components/LinkInput";
 
 import styles from "../styles/Home.module.scss";
 
@@ -18,9 +19,9 @@ function Home() {
         <title>hypr / a few links</title>
       </Head>
       <div className={styles.container}>
-        <Container paddingTop="5">
+        <Container>
           <Nav />
-          <Input />
+          <LinkInput></LinkInput>
         </Container>
       </div>
     </>

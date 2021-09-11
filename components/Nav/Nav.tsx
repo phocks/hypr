@@ -12,7 +12,7 @@ function Nav() {
   const { colorMode, toggleColorMode } = useColorMode();
 
   return (
-    <Flex align={"center"} pb="4">
+    <Flex align={"center"} my={6}>
       <Box>
         <Heading>hypr</Heading>
       </Box>
