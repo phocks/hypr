@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useColorMode, Container } from "@chakra-ui/react";
+import { useColorMode, Container, Stack, Text, Input } from "@chakra-ui/react";
 import Head from "next/head";
 
 // Components
@@ -20,6 +20,7 @@ function Home() {
       <div className={styles.container}>
         <Container paddingTop="5">
           <Nav />
+          <Input />
         </Container>
       </div>
     </>
