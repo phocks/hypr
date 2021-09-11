@@ -22,9 +22,10 @@ function Nav() {
       <Spacer />
       <Box>
         <IconButton
-          aria-label="Search database"
+        aria-label="Toggle dark mode"
           onClick={toggleColorMode}
           icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+          variant="ghost"
         />
       </Box>
     </Flex>
