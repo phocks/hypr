@@ -1,40 +1,25 @@
 import { useState, useEffect } from "react";
-import {
-  useColorMode,
-  Container,
-  Button,
-  SimpleGrid,
-  Box,
-  Heading,
-  Flex,
-  Spacer,
-} from "@chakra-ui/react";
-import { MoonIcon } from "@chakra-ui/icons";
+import { useColorMode, Container } from "@chakra-ui/react";
 import Head from "next/head";
+
+// Components
+import Nav from "../components/Nav";
 
 import styles from "../styles/Home.module.scss";
 
 function Home() {
-  const { colorMode, toggleColorMode } = useColorMode();
+  const { colorMode } = useColorMode();
 
   useEffect(() => {}, []);
 
   return (
     <>
       <Head>
-        <title>Hypr</title>
+        <title>hypr / a few links</title>
       </Head>
       <div className={styles.container}>
-        <Container paddingTop="6">
-          <Flex>
-            <Spacer />
-            <Box>
-              <MoonIcon onClick={toggleColorMode} cursor={"pointer"} />
-            </Box>
-          </Flex>
-          <Box>
-            <Heading>Hello world!</Heading>
-          </Box>
+        <Container paddingTop="5">
+          <Nav />
         </Container>
       </div>
     </>
