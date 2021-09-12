@@ -1,7 +1,7 @@
 import { Input, Button } from "@chakra-ui/react";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 
-function LinkInput({ ...props }) {
+const LinkInput = ({ ...props }) => {
   return (
     <form
       onSubmit={(event) => {
@@ -15,6 +15,6 @@ function LinkInput({ ...props }) {
       </Button>
     </form>
   );
-}
+};
 
 export default LinkInput;

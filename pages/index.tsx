@@ -5,6 +5,7 @@ import Head from "next/head";
 // Components
 import Nav from "../components/Nav";
 import LinkInput from "../components/LinkInput";
+import LinkList from "../components/LinkList";
 
 import styles from "../styles/Home.module.scss";
 
@@ -23,6 +24,7 @@ function Home() {
           <Nav />
           <LinkInput></LinkInput>
           <Divider my={8} />
+          <LinkList></LinkList>
         </Container>
       </div>
     </>
