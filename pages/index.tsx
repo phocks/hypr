@@ -4,7 +4,7 @@ import Head from "next/head";
 
 // Components
 import Nav from "../components/Nav";
-import LinkInput from "../components/LinkInput";
+import TextInput from "../components/TextInput";
 import LinkList from "../components/LinkList";
 
 import styles from "../styles/Home.module.scss";
@@ -22,9 +22,10 @@ function Home() {
       <div className={styles.container}>
         <Container>
           <Nav />
-          <LinkInput></LinkInput>
           <Divider my={8} />
           <LinkList></LinkList>
+          <Divider my={8} />
+          <TextInput />
         </Container>
       </div>
     </>
