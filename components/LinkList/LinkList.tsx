@@ -6,13 +6,22 @@ const fetcher = async (...args: [string, any]) => {
   return res.json();
 };
 
-const LinkList = ({ ...props }) => {
+const useLinks = () => {
   const { data, error } = useSWR("/api/test", fetcher);
 
-  if (error) return <div>failed to load</div>;
-  if (!data) return <Skeleton height={6} />;
+  return {
+    links: data,
+    isLoading: !error && !data,
+    isError: error,
+  };
+};
 
-  return <div>hello! {data.text}</div>;
+const LinkList = ({ ...props }) => {
+  const { links, isLoading, isError } = useLinks();
+  if (isLoading) return <Skeleton height={6} />;
+  if (isError) return <div>failed to load</div>;
+
+  return <div>hello! {links.text}</div>;
 };
 
 export default LinkList;
