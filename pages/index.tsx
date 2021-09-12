@@ -6,6 +6,7 @@ import Head from "next/head";
 import Nav from "../components/Nav";
 import TextInput from "../components/TextInput";
 import LinkList from "../components/LinkList";
+import Layout from "../components/Layout";
 
 import styles from "../styles/Home.module.scss";
 
@@ -19,15 +20,9 @@ function Home() {
       <Head>
         <title>hypr / a few links</title>
       </Head>
-      <div className={styles.container}>
-        <Container>
-          <Nav />
-          <Divider my={8} />
-          <LinkList></LinkList>
-          <Divider my={8} />
-          <TextInput />
-        </Container>
-      </div>
+      <Layout>
+        <LinkList></LinkList>
+      </Layout>
     </>
   );
 }
