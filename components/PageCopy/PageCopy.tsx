@@ -9,8 +9,6 @@ const fetcher = async (...args: [string, any]) => {
 const useLinks = () => {
   const { data, error } = useSWR("/api/links", fetcher);
 
-  console.log(data);
-
   return {
     links: data,
     isLoading: !error && !data,
@@ -24,7 +22,7 @@ const LinkList = ({ ...props }) => {
   if (isLoading) return <Skeleton height={6} />;
   if (isError) return <div>failed to load</div>;
 
-  return links.map((link, index) => <div key={index}>{link.text}</div>);
+  return links.map((link, index) => <div key={index}>{link.url}</div>);
 };
 
 export default LinkList;
