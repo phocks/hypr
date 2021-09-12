@@ -22,17 +22,13 @@ const Text = ({ pid }) => {
   const { data, isLoading, isError } = usePage(pid);
   if (isLoading) return <Skeleton height={6} />;
   if (isError) return <div>failed to load</div>;
-
-  return data.text;
+  if (data.text) return <div>{data.text}</div>;
+  return <div>no text</div>;
 };
 
 const Post = () => {
   const router = useRouter();
   const { pid } = router.query;
-
-  // const { data, isLoading, isError } = usePage(pid);
-  // if (isLoading) return <Skeleton height={6} />;
-  // if (isError) return <div>failed to load</div>;
 
   return (
     <Layout>
