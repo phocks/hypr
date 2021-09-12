@@ -1,10 +1,6 @@
 import useSWR from "swr";
 import { Skeleton } from "@chakra-ui/react";
-
-const fetcher = async (...args: [string, any]) => {
-  const res = await fetch(...args);
-  return res.json();
-};
+import fetcher from "../../lib/fetcher";
 
 const useLinks = () => {
   const { data, error } = useSWR("/api/links", fetcher);

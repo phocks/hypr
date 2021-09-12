@@ -6,7 +6,11 @@ const supabase = createClient(
 );
 
 const links = async (req, res) => {
-  const { data, error } = await supabase.from("links").select();
+  const { data, error } = await supabase
+    .from("links")
+    .select()
+    .order("created_at", { ascending: false })
+    .limit(1);
 
   if (error) {
     res.status(500).send({ error: "Something failed!" });
