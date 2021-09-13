@@ -7,6 +7,7 @@ import {
   IconButton,
 } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
+import Link from 'next/link'
 
 function Nav() {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -14,7 +15,7 @@ function Nav() {
   return (
     <Flex align={"center"} my={6}>
       <Box>
-        <Heading>hypr</Heading>
+        <Heading><Link href="/">hypr</Link></Heading>
       </Box>
       <Spacer />
       <Box>

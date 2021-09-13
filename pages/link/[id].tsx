@@ -5,10 +5,10 @@ import useSWR from "swr";
 import { Skeleton } from "@chakra-ui/react";
 import Head from "next/head";
 
-const usePage = (pid) => {
-  const shouldFetch = pid !== undefined;
+const usePage = (id) => {
+  const shouldFetch = id !== undefined;
   const { data, error } = useSWR(
-    shouldFetch ? `/api/page/${pid}` : null,
+    shouldFetch ? `/api/link/${id}` : null,
     fetcher
   );
 
@@ -19,8 +19,8 @@ const usePage = (pid) => {
   };
 };
 
-const Text = ({ pid }) => {
-  const { data, isLoading, isError } = usePage(pid);
+const Text = ({ id }) => {
+  const { data, isLoading, isError } = usePage(id);
   if (isLoading) return <Skeleton height={6} />;
   if (isError) return <div>failed to load</div>;
   if (data.text) return <div>{data.text}</div>;
@@ -29,15 +29,15 @@ const Text = ({ pid }) => {
 
 const Post = () => {
   const router = useRouter();
-  const { pid } = router.query;
+  const { id } = router.query;
 
   return (
     <>
       <Head>
-        <title>Hypr</title>
+        <title>hypr</title>
       </Head>
       <Layout>
-        <Text pid={pid} />
+        <Text id={id} />
       </Layout>
     </>
   );

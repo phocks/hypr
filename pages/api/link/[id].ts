@@ -6,11 +6,11 @@ const supabase = createClient(
 );
 
 const page = async (req, res) => {
-  const { pid } = req.query;
+  const { id } = req.query;
 
-  if (!pid) {
+  if (!id) {
     res.status(400).json({
-      error: "No pid provided",
+      error: "No pid provided...",
     });
     return;
   }
@@ -18,11 +18,12 @@ const page = async (req, res) => {
   const { data, error } = await supabase
     .from("links")
     .select()
-    .eq("id", pid)
+    .eq("id", id)
     .single();
 
   if (error) {
-    res.status(500).send({ error: "Something failed!" });
+    console.error(error);
+    res.status(500).send({ error });
     return;
   }
 

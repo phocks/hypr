@@ -1,6 +1,15 @@
-import { Container, Divider } from "@chakra-ui/react";
+import {
+  Container,
+  Divider,
+  Center,
+  ButtonGroup,
+  Button,
+  Link,
+  Text,
+} from "@chakra-ui/react";
 import Nav from "../Nav";
-import TextInput from "../TextInput";
+import NextLink from "next/link";
+import { ExternalLinkIcon } from "@chakra-ui/icons";
 
 const Layout = ({ children }) => {
   return (
@@ -9,7 +18,7 @@ const Layout = ({ children }) => {
       <Divider my={8} />
       <main>{children}</main>
       <Divider my={8} />
-      <TextInput />
+      
     </Container>
   );
 };

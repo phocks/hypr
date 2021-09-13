@@ -5,8 +5,6 @@ import fetcher from "../../lib/fetcher";
 const useLinks = () => {
   const { data, error } = useSWR("/api/links", fetcher);
 
-  console.log(data);
-
   return {
     links: data,
     isLoading: !error && !data,
