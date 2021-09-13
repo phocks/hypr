@@ -3,6 +3,7 @@ import Layout from "../../components/Layout";
 import fetcher from "../../lib/fetcher";
 import useSWR from "swr";
 import { Skeleton } from "@chakra-ui/react";
+import Head from "next/head";
 
 const usePage = (pid) => {
   const shouldFetch = pid !== undefined;
@@ -31,9 +32,14 @@ const Post = () => {
   const { pid } = router.query;
 
   return (
-    <Layout>
-      <Text pid={pid} />
-    </Layout>
+    <>
+      <Head>
+        <title>Hypr</title>
+      </Head>
+      <Layout>
+        <Text pid={pid} />
+      </Layout>
+    </>
   );
 };
 
