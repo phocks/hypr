@@ -48,12 +48,11 @@ const Post = () => {
               let inputValue = event.target.value;
               setText(inputValue);
             }}
-            form=""
           ></Textarea>
           <form
             onSubmit={(event) => {
               event.preventDefault();
-              console.log(text)
+              console.log(text);
             }}
           >
             <Button type="submit">Post &rarr;</Button>
