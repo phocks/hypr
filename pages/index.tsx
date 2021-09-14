@@ -21,7 +21,8 @@ function Home() {
         <title>hypr / a few links</title>
       </Head>
       <Layout>
-        <LinkList></LinkList>
+        
+        
       </Layout>
     </>
   );
