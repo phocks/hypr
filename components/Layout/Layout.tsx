@@ -18,7 +18,14 @@ const Layout = ({ children }) => {
       <Divider my={8} />
       <main>{children}</main>
       <Divider my={8} />
-      
+      <Center>
+        <Text fontSize="sm">
+          Site by{" "}
+          <Link href="https://twitter.com/phocks" color="blue.600" isExternal>
+            phocks
+          </Link>.
+        </Text>
+      </Center>
     </Container>
   );
 };
