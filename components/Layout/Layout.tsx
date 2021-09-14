@@ -15,15 +15,16 @@ const Layout = ({ children }) => {
   return (
     <Container>
       <Nav />
-      <Divider my={8} />
+      <Divider my={9} />
       <main>{children}</main>
-      <Divider my={8} />
+      <Divider my={9} />
       <Center>
         <Text fontSize="sm">
           Site by{" "}
           <Link href="https://twitter.com/phocks" color="blue.600" isExternal>
             phocks
-          </Link>.
+          </Link>
+          .
         </Text>
       </Center>
     </Container>

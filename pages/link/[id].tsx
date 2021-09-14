@@ -2,8 +2,9 @@ import { useRouter } from "next/router";
 import Layout from "../../components/Layout";
 import fetcher from "../../lib/fetcher";
 import useSWR from "swr";
-import { Skeleton } from "@chakra-ui/react";
+import { Heading, Skeleton, Textarea, Box, Button } from "@chakra-ui/react";
 import Head from "next/head";
+import { useState } from "react";
 
 const usePage = (id) => {
   const shouldFetch = id !== undefined;
@@ -30,6 +31,7 @@ const Text = ({ id }) => {
 const Post = () => {
   const router = useRouter();
   const { id } = router.query;
+  const [text, setText] = useState(null);
 
   return (
     <>
@@ -38,6 +40,25 @@ const Post = () => {
       </Head>
       <Layout>
         <Text id={id} />
+        <Box my={8}>
+          <Textarea
+            mb="4"
+            placeholder="Write a reply..."
+            onChange={(event) => {
+              let inputValue = event.target.value;
+              setText(inputValue);
+            }}
+            form=""
+          ></Textarea>
+          <form
+            onSubmit={(event) => {
+              event.preventDefault();
+              console.log(text)
+            }}
+          >
+            <Button type="submit">Post &rarr;</Button>
+          </form>
+        </Box>
       </Layout>
     </>
   );

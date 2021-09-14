@@ -32,7 +32,7 @@ function Home() {
       </Head>
       <Layout>
         <Box pb="6">
-          <Text fontSize="lg">
+          <Text fontSize="large">
             A simple experimental website where you can read someone's writing
             and then add your own.
           </Text>
