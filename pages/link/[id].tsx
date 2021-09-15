@@ -31,7 +31,7 @@ const Text = ({ id }) => {
 const Post = () => {
   const router = useRouter();
   const { id } = router.query;
-  const [text, setText] = useState(null);
+  const [text, setText] = useState("");
 
   return (
     <>
@@ -48,11 +48,24 @@ const Post = () => {
               let inputValue = event.target.value;
               setText(inputValue);
             }}
+            value={text}
           ></Textarea>
           <form
-            onSubmit={(event) => {
+            onSubmit={async (event) => {
               event.preventDefault();
               console.log(text);
+              const res = await fetch("/api/submit", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ text, link: id }),
+              });
+
+              const newData = await res.json();
+              setText("");
+              console.log(newData[0]);
+              router.push(`/link/${newData[0].id}`);
             }}
           >
             <Button type="submit">Post &rarr;</Button>
