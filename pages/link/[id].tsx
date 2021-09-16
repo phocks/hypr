@@ -2,9 +2,18 @@ import { useRouter } from "next/router";
 import Layout from "../../components/Layout";
 import fetcher from "../../lib/fetcher";
 import useSWR from "swr";
-import { Heading, Skeleton, Textarea, Box, Button } from "@chakra-ui/react";
+import {
+  Heading,
+  Skeleton,
+  Textarea,
+  Box,
+  Button,
+  Text,
+} from "@chakra-ui/react";
 import Head from "next/head";
 import { useState } from "react";
+
+import styles from "../../styles/Page.module.scss";
 
 const usePage = (id) => {
   const shouldFetch = id !== undefined;
@@ -20,12 +29,12 @@ const usePage = (id) => {
   };
 };
 
-const Text = ({ id }) => {
+const TextContent = ({ id }) => {
   const { data, isLoading, isError } = usePage(id);
   if (isLoading) return <Skeleton height={6} />;
-  if (isError) return <div>failed to load</div>;
-  if (data.text) return <div>{data.text}</div>;
-  return <div>no text</div>;
+  if (isError) return <Text>failed to load</Text>;
+  if (data.text) return <Text className={styles.content}>{data.text}</Text>;
+  return <Text className={styles.content}>no text</Text>;
 };
 
 const Post = () => {
@@ -39,7 +48,7 @@ const Post = () => {
         <title>hypr</title>
       </Head>
       <Layout>
-        <Text id={id} />
+        <TextContent id={id} />
         <Box my={8}>
           <Textarea
             mb="4"
@@ -53,7 +62,8 @@ const Post = () => {
           <form
             onSubmit={async (event) => {
               event.preventDefault();
-              console.log(text);
+              if (text === "") return;
+
               const res = await fetch("/api/submit", {
                 method: "POST",
                 headers: {
