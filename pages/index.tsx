@@ -49,7 +49,7 @@ function Home() {
             if (destination) router.push(`/link/${destination}`);
           }}
         >
-          Go &rarr;
+          {destination ? (<>Go &rarr;</>) : "loading..."}
         </Button>
       </Layout>
     </>
