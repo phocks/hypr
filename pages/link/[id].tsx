@@ -33,7 +33,22 @@ const TextContent = ({ id }) => {
   const { data, isLoading, isError } = usePage(id);
   if (isLoading) return <Skeleton height={6} />;
   if (isError) return <Text>failed to load</Text>;
-  if (data.text) return <Text className={styles.content}>{data.text}</Text>;
+  if (data.text) {
+    const originalText = data.text;
+    const openingAnchorTag = originalText.replace(
+      "[",
+      `<a href="/link/${data.link}">`
+    );
+    const finalText = openingAnchorTag.replace("]", "</a>");
+
+    const createMarkup = () => {
+      return { __html: finalText };
+    };
+
+    return (
+      <p dangerouslySetInnerHTML={createMarkup()} className={styles.content} />
+    );
+  }
   return <Text>no text</Text>;
 };
 
