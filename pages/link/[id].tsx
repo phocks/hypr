@@ -11,6 +11,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import Head from "next/head";
+import Link from "next/link";
 import { useState } from "react";
 
 import styles from "../../styles/Page.module.scss";
@@ -35,18 +36,25 @@ const TextContent = ({ id }) => {
   if (isError) return <Text>failed to load</Text>;
   if (data.text) {
     const originalText = data.text;
-    const openingAnchorTag = originalText.replace(
-      "[",
-      `<a href="/link/${data.link}">`
-    );
-    const finalText = openingAnchorTag.replace("]", "</a>");
+    // const openingAnchorTag = originalText.replace(
+    //   "[",
+    //   `<a href="/link/${data.link}">`
+    // );
+    // const finalText = openingAnchorTag.replace("]", "</a>");
 
-    const createMarkup = () => {
-      return { __html: finalText };
-    };
+    const textUntilOpening = originalText.split("[")[0];
+    const textAfter = originalText.substring(originalText.indexOf("]") + 1);
+    const textBetween = originalText.substring(
+      originalText.indexOf("[") + 1,
+      originalText.lastIndexOf("]")
+    );
 
     return (
-      <p dangerouslySetInnerHTML={createMarkup()} className={styles.content} />
+      <Text className={styles.content}>
+        {textUntilOpening}
+        <Link href={`/link/${data.link}`}>{textBetween}</Link>
+        {textAfter}
+      </Text>
     );
   }
   return <Text>no text</Text>;
