@@ -34,7 +34,7 @@ const TextContent = ({ id }) => {
   if (isLoading) return <Skeleton height={6} />;
   if (isError) return <Text>failed to load</Text>;
   if (data.text) return <Text className={styles.content}>{data.text}</Text>;
-  return <Text className={styles.content}>no text</Text>;
+  return <Text>no text</Text>;
 };
 
 const Post = () => {

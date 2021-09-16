@@ -40,11 +40,15 @@ function Home() {
       <Layout>
         <Box pb="6">
           <Text fontSize="large">
-            An extremely simple experimental website where you can read someone's writing
-            and then add your own.
+            An extremely simple experimental website where you can read
+            someone's writing and then add your own.
           </Text>
         </Box>
-        <Button onClick={() => router.push(`/link/${destination}`)}>
+        <Button
+          onClick={() => {
+            if (destination) router.push(`/link/${destination}`);
+          }}
+        >
           Go &rarr;
         </Button>
       </Layout>
