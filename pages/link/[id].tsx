@@ -36,11 +36,11 @@ const TextContent = ({ id }) => {
   if (isError) return <Text>failed to load</Text>;
   if (data.text) {
     const originalText = data.text;
-    // const openingAnchorTag = originalText.replace(
-    //   "[",
-    //   `<a href="/link/${data.link}">`
-    // );
-    // const finalText = openingAnchorTag.replace("]", "</a>");
+    const hasLink = originalText.includes("[");
+
+    if (!hasLink) {
+      return <Text className={styles.content}>{originalText}</Text>;
+    }
 
     const textUntilOpening = originalText.split("[")[0];
     const textAfter = originalText.substring(originalText.indexOf("]") + 1);
@@ -86,6 +86,7 @@ const Post = () => {
             onSubmit={async (event) => {
               event.preventDefault();
               if (text === "") return;
+              if (!text.includes("[")) return;
 
               const res = await fetch("/api/submit", {
                 method: "POST",
