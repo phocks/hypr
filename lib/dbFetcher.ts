@@ -1,3 +1,4 @@
+import to from "await-to-js";
 import { createClient } from "@supabase/supabase-js";
 
 const supabase = createClient(
@@ -5,19 +6,16 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 );
 
-const links = async (req, res) => {
+const dbFetcher = async (db) => {
   const { data, error } = await supabase
-    .from("links")
+    .from(db)
     .select()
     .order("created_at", { ascending: false })
     .limit(1);
 
-  if (error) {
-    res.status(500).send({ error: "Something failed!" });
-    return;
-  }
+  if (error) throw error;
 
-  res.status(200).json(data);
+  return data;
 };
 
-export default links;
+export default dbFetcher;

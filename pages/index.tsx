@@ -12,6 +12,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import fetcher from "../lib/fetcher";
+import dbFetcher from "../lib/dbFetcher";
 
 // Components
 import Nav from "../components/Nav";
@@ -21,14 +22,20 @@ import Layout from "../components/Layout";
 
 import styles from "../styles/Home.module.scss";
 
-function Home() {
+const useHyperlinks = () => {
+  const { data, error } = useSWR(`hyperlinks`, dbFetcher);
+
+  return {
+    data: data,
+    isLoading: !error && !data,
+    isError: error,
+  };
+};
+
+const Home = () => {
   const { colorMode } = useColorMode();
   const router = useRouter();
-
-  const { data, error } = useSWR(`/api/links`, fetcher);
-  if (error) console.error(error);
-
-  const destination = data ? data[0].id : null;
+  const { data, isError, isLoading } = useHyperlinks();
 
   useEffect(() => {}, []);
 
@@ -39,21 +46,16 @@ function Home() {
       </Head>
       <Layout>
         <Box pb="6">
-          <Text fontSize="large">
-            An extremely simple experimental website where you can read
-            someone's writing and then add your own.
-          </Text>
+          <Text fontSize="large">A few links.</Text>
         </Box>
-        <Button
-          onClick={() => {
-            if (destination) router.push(`/link/${destination}`);
-          }}
-        >
-          {destination ? (<>Go &rarr;</>) : "Loading..."}
-        </Button>
+        {data?.map((link, index) => (
+          <div key={index}>
+            <a href={link.hyperlink}> {link.hyperlink}</a>
+          </div>
+        ))}
       </Layout>
     </>
   );
-}
+};
 
 export default Home;
