@@ -1,17 +1,10 @@
 import "../styles/globals.scss";
 import { ChakraProvider, extendTheme, ThemeConfig } from "@chakra-ui/react";
+import "@fontsource/inconsolata/400.css";
+import "@fontsource/inconsolata/700.css";
+import theme from "../lib/theme";
 
-const colors = {
-  initialColorMode: "light",
-  useSystemColorMode: false,
-  brand: {
-    900: "#1a365d",
-    800: "#153e75",
-    700: "#2a69ac",
-  },
-};
-
-const config: ThemeConfig = extendTheme({ colors });
+const config: ThemeConfig = extendTheme({ ...theme });
 
 function MyApp({ Component, pageProps }) {
   return (
