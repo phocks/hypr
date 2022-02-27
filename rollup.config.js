@@ -6,7 +6,7 @@ import { terser } from "rollup-plugin-terser";
 import sveltePreprocess from "svelte-preprocess";
 import typescript from "@rollup/plugin-typescript";
 import css from "rollup-plugin-css-only";
-import alias from '@rollup/plugin-alias';
+import alias from "@rollup/plugin-alias";
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -66,10 +66,8 @@ export default {
     }),
     commonjs(),
     alias({
-      entries: [
-        { find: '$lib', replacement: __dirname + '/src/lib' },
-        { find: 'batman-1.0.0', replacement: './joker-1.5.0' }
-      ]
+      resolve: [".js", ".ts", ".svelte"],
+      entries: [{ find: "$lib", replacement: __dirname + "/src/lib" }],
     }),
     typescript({
       sourceMap: !production,
@@ -87,7 +85,6 @@ export default {
     // If we're building for production (npm run build
     // instead of npm run dev), minify
     production && terser(),
-
   ],
   watch: {
     clearScreen: false,
