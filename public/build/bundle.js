@@ -1001,32 +1001,6 @@ var app = (function () {
         }
         return params.length ? '&' + params.join('&') : '';
     }
-    /**
-     * Decodes a querystring (e.g. ?arg=val&arg2=val2) into a params object
-     * (e.g. {arg: 'val', arg2: 'val2'})
-     */
-    function querystringDecode(querystring) {
-        const obj = {};
-        const tokens = querystring.replace(/^\?/, '').split('&');
-        tokens.forEach(token => {
-            if (token) {
-                const [key, value] = token.split('=');
-                obj[decodeURIComponent(key)] = decodeURIComponent(value);
-            }
-        });
-        return obj;
-    }
-    /**
-     * Extract the query string part of a URL, including the leading question mark (if present).
-     */
-    function extractQuerystring(url) {
-        const queryStart = url.indexOf('?');
-        if (!queryStart) {
-            return '';
-        }
-        const fragmentStart = url.indexOf('#', queryStart);
-        return url.substring(queryStart, fragmentStart > 0 ? fragmentStart : undefined);
-    }
 
     /**
      * Helper to make a Subscribe function (just like Promise helps make a
@@ -4576,173 +4550,6 @@ var app = (function () {
             return debugFail('not implemented');
         }
     }
-    async function updateEmailPassword(auth, request) {
-        return _performApiRequest(auth, "POST" /* POST */, "/v1/accounts:update" /* SET_ACCOUNT_INFO */, request);
-    }
-
-    /**
-     * @license
-     * Copyright 2020 Google LLC
-     *
-     * Licensed under the Apache License, Version 2.0 (the "License");
-     * you may not use this file except in compliance with the License.
-     * You may obtain a copy of the License at
-     *
-     *   http://www.apache.org/licenses/LICENSE-2.0
-     *
-     * Unless required by applicable law or agreed to in writing, software
-     * distributed under the License is distributed on an "AS IS" BASIS,
-     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-     * See the License for the specific language governing permissions and
-     * limitations under the License.
-     */
-    async function signInWithPassword(auth, request) {
-        return _performSignInRequest(auth, "POST" /* POST */, "/v1/accounts:signInWithPassword" /* SIGN_IN_WITH_PASSWORD */, _addTidIfNecessary(auth, request));
-    }
-
-    /**
-     * @license
-     * Copyright 2020 Google LLC
-     *
-     * Licensed under the Apache License, Version 2.0 (the "License");
-     * you may not use this file except in compliance with the License.
-     * You may obtain a copy of the License at
-     *
-     *   http://www.apache.org/licenses/LICENSE-2.0
-     *
-     * Unless required by applicable law or agreed to in writing, software
-     * distributed under the License is distributed on an "AS IS" BASIS,
-     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-     * See the License for the specific language governing permissions and
-     * limitations under the License.
-     */
-    async function signInWithEmailLink$1(auth, request) {
-        return _performSignInRequest(auth, "POST" /* POST */, "/v1/accounts:signInWithEmailLink" /* SIGN_IN_WITH_EMAIL_LINK */, _addTidIfNecessary(auth, request));
-    }
-    async function signInWithEmailLinkForLinking(auth, request) {
-        return _performSignInRequest(auth, "POST" /* POST */, "/v1/accounts:signInWithEmailLink" /* SIGN_IN_WITH_EMAIL_LINK */, _addTidIfNecessary(auth, request));
-    }
-
-    /**
-     * @license
-     * Copyright 2020 Google LLC
-     *
-     * Licensed under the Apache License, Version 2.0 (the "License");
-     * you may not use this file except in compliance with the License.
-     * You may obtain a copy of the License at
-     *
-     *   http://www.apache.org/licenses/LICENSE-2.0
-     *
-     * Unless required by applicable law or agreed to in writing, software
-     * distributed under the License is distributed on an "AS IS" BASIS,
-     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-     * See the License for the specific language governing permissions and
-     * limitations under the License.
-     */
-    /**
-     * Interface that represents the credentials returned by {@link EmailAuthProvider} for
-     * {@link ProviderId}.PASSWORD
-     *
-     * @remarks
-     * Covers both {@link SignInMethod}.EMAIL_PASSWORD and
-     * {@link SignInMethod}.EMAIL_LINK.
-     *
-     * @public
-     */
-    class EmailAuthCredential extends AuthCredential {
-        /** @internal */
-        constructor(
-        /** @internal */
-        _email, 
-        /** @internal */
-        _password, signInMethod, 
-        /** @internal */
-        _tenantId = null) {
-            super("password" /* PASSWORD */, signInMethod);
-            this._email = _email;
-            this._password = _password;
-            this._tenantId = _tenantId;
-        }
-        /** @internal */
-        static _fromEmailAndPassword(email, password) {
-            return new EmailAuthCredential(email, password, "password" /* EMAIL_PASSWORD */);
-        }
-        /** @internal */
-        static _fromEmailAndCode(email, oobCode, tenantId = null) {
-            return new EmailAuthCredential(email, oobCode, "emailLink" /* EMAIL_LINK */, tenantId);
-        }
-        /** {@inheritdoc AuthCredential.toJSON} */
-        toJSON() {
-            return {
-                email: this._email,
-                password: this._password,
-                signInMethod: this.signInMethod,
-                tenantId: this._tenantId
-            };
-        }
-        /**
-         * Static method to deserialize a JSON representation of an object into an {@link  AuthCredential}.
-         *
-         * @param json - Either `object` or the stringified representation of the object. When string is
-         * provided, `JSON.parse` would be called first.
-         *
-         * @returns If the JSON input does not represent an {@link AuthCredential}, null is returned.
-         */
-        static fromJSON(json) {
-            const obj = typeof json === 'string' ? JSON.parse(json) : json;
-            if ((obj === null || obj === void 0 ? void 0 : obj.email) && (obj === null || obj === void 0 ? void 0 : obj.password)) {
-                if (obj.signInMethod === "password" /* EMAIL_PASSWORD */) {
-                    return this._fromEmailAndPassword(obj.email, obj.password);
-                }
-                else if (obj.signInMethod === "emailLink" /* EMAIL_LINK */) {
-                    return this._fromEmailAndCode(obj.email, obj.password, obj.tenantId);
-                }
-            }
-            return null;
-        }
-        /** @internal */
-        async _getIdTokenResponse(auth) {
-            switch (this.signInMethod) {
-                case "password" /* EMAIL_PASSWORD */:
-                    return signInWithPassword(auth, {
-                        returnSecureToken: true,
-                        email: this._email,
-                        password: this._password
-                    });
-                case "emailLink" /* EMAIL_LINK */:
-                    return signInWithEmailLink$1(auth, {
-                        email: this._email,
-                        oobCode: this._password
-                    });
-                default:
-                    _fail(auth, "internal-error" /* INTERNAL_ERROR */);
-            }
-        }
-        /** @internal */
-        async _linkToIdToken(auth, idToken) {
-            switch (this.signInMethod) {
-                case "password" /* EMAIL_PASSWORD */:
-                    return updateEmailPassword(auth, {
-                        idToken,
-                        returnSecureToken: true,
-                        email: this._email,
-                        password: this._password
-                    });
-                case "emailLink" /* EMAIL_LINK */:
-                    return signInWithEmailLinkForLinking(auth, {
-                        idToken,
-                        email: this._email,
-                        oobCode: this._password
-                    });
-                default:
-                    _fail(auth, "internal-error" /* INTERNAL_ERROR */);
-            }
-        }
-        /** @internal */
-        _getReauthenticationResolver(auth) {
-            return this._getIdTokenResponse(auth);
-        }
-    }
 
     /**
      * @license
@@ -4903,201 +4710,6 @@ var app = (function () {
             return request;
         }
     }
-
-    /**
-     * @license
-     * Copyright 2020 Google LLC
-     *
-     * Licensed under the Apache License, Version 2.0 (the "License");
-     * you may not use this file except in compliance with the License.
-     * You may obtain a copy of the License at
-     *
-     *   http://www.apache.org/licenses/LICENSE-2.0
-     *
-     * Unless required by applicable law or agreed to in writing, software
-     * distributed under the License is distributed on an "AS IS" BASIS,
-     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-     * See the License for the specific language governing permissions and
-     * limitations under the License.
-     */
-    /**
-     * Maps the mode string in action code URL to Action Code Info operation.
-     *
-     * @param mode
-     */
-    function parseMode(mode) {
-        switch (mode) {
-            case 'recoverEmail':
-                return "RECOVER_EMAIL" /* RECOVER_EMAIL */;
-            case 'resetPassword':
-                return "PASSWORD_RESET" /* PASSWORD_RESET */;
-            case 'signIn':
-                return "EMAIL_SIGNIN" /* EMAIL_SIGNIN */;
-            case 'verifyEmail':
-                return "VERIFY_EMAIL" /* VERIFY_EMAIL */;
-            case 'verifyAndChangeEmail':
-                return "VERIFY_AND_CHANGE_EMAIL" /* VERIFY_AND_CHANGE_EMAIL */;
-            case 'revertSecondFactorAddition':
-                return "REVERT_SECOND_FACTOR_ADDITION" /* REVERT_SECOND_FACTOR_ADDITION */;
-            default:
-                return null;
-        }
-    }
-    /**
-     * Helper to parse FDL links
-     *
-     * @param url
-     */
-    function parseDeepLink(url) {
-        const link = querystringDecode(extractQuerystring(url))['link'];
-        // Double link case (automatic redirect).
-        const doubleDeepLink = link
-            ? querystringDecode(extractQuerystring(link))['deep_link_id']
-            : null;
-        // iOS custom scheme links.
-        const iOSDeepLink = querystringDecode(extractQuerystring(url))['deep_link_id'];
-        const iOSDoubleDeepLink = iOSDeepLink
-            ? querystringDecode(extractQuerystring(iOSDeepLink))['link']
-            : null;
-        return iOSDoubleDeepLink || iOSDeepLink || doubleDeepLink || link || url;
-    }
-    /**
-     * A utility class to parse email action URLs such as password reset, email verification,
-     * email link sign in, etc.
-     *
-     * @public
-     */
-    class ActionCodeURL {
-        /**
-         * @param actionLink - The link from which to extract the URL.
-         * @returns The {@link ActionCodeURL} object, or null if the link is invalid.
-         *
-         * @internal
-         */
-        constructor(actionLink) {
-            var _a, _b, _c, _d, _e, _f;
-            const searchParams = querystringDecode(extractQuerystring(actionLink));
-            const apiKey = (_a = searchParams["apiKey" /* API_KEY */]) !== null && _a !== void 0 ? _a : null;
-            const code = (_b = searchParams["oobCode" /* CODE */]) !== null && _b !== void 0 ? _b : null;
-            const operation = parseMode((_c = searchParams["mode" /* MODE */]) !== null && _c !== void 0 ? _c : null);
-            // Validate API key, code and mode.
-            _assert(apiKey && code && operation, "argument-error" /* ARGUMENT_ERROR */);
-            this.apiKey = apiKey;
-            this.operation = operation;
-            this.code = code;
-            this.continueUrl = (_d = searchParams["continueUrl" /* CONTINUE_URL */]) !== null && _d !== void 0 ? _d : null;
-            this.languageCode = (_e = searchParams["languageCode" /* LANGUAGE_CODE */]) !== null && _e !== void 0 ? _e : null;
-            this.tenantId = (_f = searchParams["tenantId" /* TENANT_ID */]) !== null && _f !== void 0 ? _f : null;
-        }
-        /**
-         * Parses the email action link string and returns an {@link ActionCodeURL} if the link is valid,
-         * otherwise returns null.
-         *
-         * @param link  - The email action link string.
-         * @returns The {@link ActionCodeURL} object, or null if the link is invalid.
-         *
-         * @public
-         */
-        static parseLink(link) {
-            const actionLink = parseDeepLink(link);
-            try {
-                return new ActionCodeURL(actionLink);
-            }
-            catch (_a) {
-                return null;
-            }
-        }
-    }
-
-    /**
-     * @license
-     * Copyright 2020 Google LLC
-     *
-     * Licensed under the Apache License, Version 2.0 (the "License");
-     * you may not use this file except in compliance with the License.
-     * You may obtain a copy of the License at
-     *
-     *   http://www.apache.org/licenses/LICENSE-2.0
-     *
-     * Unless required by applicable law or agreed to in writing, software
-     * distributed under the License is distributed on an "AS IS" BASIS,
-     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-     * See the License for the specific language governing permissions and
-     * limitations under the License.
-     */
-    /**
-     * Provider for generating {@link EmailAuthCredential}.
-     *
-     * @public
-     */
-    class EmailAuthProvider {
-        constructor() {
-            /**
-             * Always set to {@link ProviderId}.PASSWORD, even for email link.
-             */
-            this.providerId = EmailAuthProvider.PROVIDER_ID;
-        }
-        /**
-         * Initialize an {@link AuthCredential} using an email and password.
-         *
-         * @example
-         * ```javascript
-         * const authCredential = EmailAuthProvider.credential(email, password);
-         * const userCredential = await signInWithCredential(auth, authCredential);
-         * ```
-         *
-         * @example
-         * ```javascript
-         * const userCredential = await signInWithEmailAndPassword(auth, email, password);
-         * ```
-         *
-         * @param email - Email address.
-         * @param password - User account password.
-         * @returns The auth provider credential.
-         */
-        static credential(email, password) {
-            return EmailAuthCredential._fromEmailAndPassword(email, password);
-        }
-        /**
-         * Initialize an {@link AuthCredential} using an email and an email link after a sign in with
-         * email link operation.
-         *
-         * @example
-         * ```javascript
-         * const authCredential = EmailAuthProvider.credentialWithLink(auth, email, emailLink);
-         * const userCredential = await signInWithCredential(auth, authCredential);
-         * ```
-         *
-         * @example
-         * ```javascript
-         * await sendSignInLinkToEmail(auth, email);
-         * // Obtain emailLink from user.
-         * const userCredential = await signInWithEmailLink(auth, email, emailLink);
-         * ```
-         *
-         * @param auth - The {@link Auth} instance used to verify the link.
-         * @param email - Email address.
-         * @param emailLink - Sign-in email link.
-         * @returns - The auth provider credential.
-         */
-        static credentialWithLink(email, emailLink) {
-            const actionCodeUrl = ActionCodeURL.parseLink(emailLink);
-            _assert(actionCodeUrl, "argument-error" /* ARGUMENT_ERROR */);
-            return EmailAuthCredential._fromEmailAndCode(email, actionCodeUrl.code, actionCodeUrl.tenantId);
-        }
-    }
-    /**
-     * Always set to {@link ProviderId}.PASSWORD, even for email link.
-     */
-    EmailAuthProvider.PROVIDER_ID = "password" /* PASSWORD */;
-    /**
-     * Always set to {@link SignInMethod}.EMAIL_PASSWORD.
-     */
-    EmailAuthProvider.EMAIL_PASSWORD_SIGN_IN_METHOD = "password" /* EMAIL_PASSWORD */;
-    /**
-     * Always set to {@link SignInMethod}.EMAIL_LINK.
-     */
-    EmailAuthProvider.EMAIL_LINK_SIGN_IN_METHOD = "emailLink" /* EMAIL_LINK */;
 
     /**
      * @license
@@ -5839,39 +5451,6 @@ var app = (function () {
             await auth._updateCurrentUser(userCredential.user);
         }
         return userCredential;
-    }
-    /**
-     * Asynchronously signs in with the given credentials.
-     *
-     * @remarks
-     * An {@link AuthProvider} can be used to generate the credential.
-     *
-     * @param auth - The {@link Auth} instance.
-     * @param credential - The auth credential.
-     *
-     * @public
-     */
-    async function signInWithCredential(auth, credential) {
-        return _signInWithCredential(_castAuth(auth), credential);
-    }
-    /**
-     * Asynchronously signs in using an email and password.
-     *
-     * @remarks
-     * Fails with an error if the email address and password do not match.
-     *
-     * Note: The user's password is NOT the password used to access the user's email account. The
-     * email address serves as a unique identifier for the user, and the password is used to access
-     * the user's account in your Firebase project. See also: {@link createUserWithEmailAndPassword}.
-     *
-     * @param auth - The {@link Auth} instance.
-     * @param email - The users email address.
-     * @param password - The users password.
-     *
-     * @public
-     */
-    function signInWithEmailAndPassword(auth, email, password) {
-        return signInWithCredential(getModularInstance(auth), EmailAuthProvider.credential(email, password));
     }
     /**
      * Adds an observer for changes to the user's sign-in state.
@@ -11010,9 +10589,9 @@ var app = (function () {
     			main = element("main");
     			p = element("p");
     			p.textContent = "Hypr space...";
-    			add_location(p, file, 28, 2, 851);
+    			add_location(p, file, 29, 2, 804);
     			attr_dev(main, "class", "svelte-177t831");
-    			add_location(main, file, 27, 0, 842);
+    			add_location(main, file, 28, 0, 795);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -11044,28 +10623,25 @@ var app = (function () {
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('App', slots, []);
 
-    	const handleAuthStateChanged = user => {
+    	const handleAuthStateChanged = async user => {
     		if (user) {
     			// User is signed in, see docs for a list of available properties
     			// https://firebase.google.com/docs/reference/js/firebase.User
-    			const uid = user.uid;
+    			user.uid;
 
-    			console.log(uid);
-    		} // ...
-    		// User is signed out
-    		// ...
+    			console.log(user);
+    		} // User is signed out
     	};
 
     	// Register an event handler
     	onAuthStateChanged(auth, handleAuthStateChanged);
 
     	onMount(async () => {
-    		// console.log(await getCities(db));
-    		const userCredential = await signInWithEmailAndPassword(auth, "phocks@gmail.com", "password");
-
-    		// Signed in
-    		userCredential.user;
-    	});
+    		
+    	}); // const userCredential = await signInWithEmailAndPassword(
+    	//   auth,
+    	//   "phocks@gmail.com",
+    	//   "password"
 
     	const writable_props = [];
 
@@ -11075,7 +10651,6 @@ var app = (function () {
 
     	$$self.$capture_state = () => ({
     		onMount,
-    		signInWithEmailAndPassword,
     		onAuthStateChanged,
     		auth,
     		handleAuthStateChanged

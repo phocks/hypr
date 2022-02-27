@@ -27,6 +27,7 @@
   "dependencies": {
     "firebase": "^9.6.7",
     "firebaseui": "^6.0.1",
+    "rollup-plugin-alias": "^2.2.0",
     "rollup-plugin-dotenv": "^0.3.0",
     "sirv-cli": "^2.0.0"
   }

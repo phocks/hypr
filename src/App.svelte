@@ -8,34 +8,29 @@
   // Local imports
   import { auth } from "./lib/auth";
 
-  const handleAuthStateChanged = (user) => {
+  const handleAuthStateChanged = async (user) => {
     if (user) {
       // User is signed in, see docs for a list of available properties
       // https://firebase.google.com/docs/reference/js/firebase.User
       const uid = user.uid;
-      console.log(uid);
-      // ...
+      console.log(user);
     } else {
       // User is signed out
-      // ...
     }
   };
 
   // Register an event handler
   onAuthStateChanged(auth, handleAuthStateChanged);
 
-
   onMount(async () => {
-    // console.log(await getCities(db));
+    // const userCredential = await signInWithEmailAndPassword(
+    //   auth,
+    //   "phocks@gmail.com",
+    //   "password"
+    // );
 
-    const userCredential = await signInWithEmailAndPassword(
-      auth,
-      "phocks@gmail.com",
-      "password"
-    );
-
-    // Signed in
-    const user = userCredential.user;
+    // // Signed in
+    // const user = userCredential.user;
   });
 </script>
 
