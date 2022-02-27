@@ -10589,9 +10589,9 @@ var app = (function () {
     			main = element("main");
     			p = element("p");
     			p.textContent = "Hypr space...";
-    			add_location(p, file, 29, 2, 804);
+    			add_location(p, file, 29, 2, 803);
     			attr_dev(main, "class", "svelte-177t831");
-    			add_location(main, file, 28, 0, 795);
+    			add_location(main, file, 28, 0, 794);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");

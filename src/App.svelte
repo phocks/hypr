@@ -6,7 +6,7 @@
   } from "firebase/auth";
 
   // Local imports
-  import { auth } from "./lib/auth";
+  import { auth } from "$lib/auth";
 
   const handleAuthStateChanged = async (user) => {
     if (user) {
