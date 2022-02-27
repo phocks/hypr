@@ -1,41 +1,35 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import {
-    signInWithEmailAndPassword,
-    onAuthStateChanged,
-  } from "firebase/auth";
+  import { onAuthStateChanged } from "firebase/auth";
+
+  // Vars
+  let userId: string = "";
 
   // Local imports
   import { auth } from "$lib/auth";
 
-  const handleAuthStateChanged = async (user) => {
-    if (user) {
-      // User is signed in, see docs for a list of available properties
-      // https://firebase.google.com/docs/reference/js/firebase.User
-      const uid = user.uid;
-      console.log(user);
-    } else {
-      // User is signed out
-    }
-  };
-
-  // Register an event handler
+  // Register an event handler when user logs in or logs out
   onAuthStateChanged(auth, handleAuthStateChanged);
 
-  onMount(async () => {
-    // const userCredential = await signInWithEmailAndPassword(
-    //   auth,
-    //   "phocks@gmail.com",
-    //   "password"
-    // );
+  const onUserLogin = (user) => {
+    console.log("User logged in", user);
+    userId = user.uid;
+  };
 
-    // // Signed in
-    // const user = userCredential.user;
-  });
+  const onUserLogout = () => {
+    console.log("User logged out");
+  };
+
+  function handleAuthStateChanged(user) {
+    if (user) onUserLogin(user);
+    else onUserLogout();
+  }
+
+  onMount(async () => {});
 </script>
 
 <main>
-  <p>Hypr space...</p>
+  <p>User: {userId}</p>
 </main>
 
 <style>

@@ -39,6 +39,9 @@ var app = (function () {
     function element(name) {
         return document.createElement(name);
     }
+    function text(data) {
+        return document.createTextNode(data);
+    }
     function attr(node, attribute, value) {
         if (value == null)
             node.removeAttribute(attribute);
@@ -308,6 +311,13 @@ var app = (function () {
             dispatch_dev('SvelteDOMRemoveAttribute', { node, attribute });
         else
             dispatch_dev('SvelteDOMSetAttribute', { node, attribute, value });
+    }
+    function set_data_dev(text, data) {
+        data = '' + data;
+        if (text.wholeText === data)
+            return;
+        dispatch_dev('SvelteDOMSetData', { node: text, data });
+        text.data = data;
     }
     function validate_slots(name, slot, keys) {
         for (const slot_key of Object.keys(slot)) {
@@ -10583,15 +10593,18 @@ var app = (function () {
     function create_fragment(ctx) {
     	let main;
     	let p;
+    	let t0;
+    	let t1;
 
     	const block = {
     		c: function create() {
     			main = element("main");
     			p = element("p");
-    			p.textContent = "Hypr space...";
-    			add_location(p, file, 29, 2, 803);
+    			t0 = text("User: ");
+    			t1 = text(/*userId*/ ctx[0]);
+    			add_location(p, file, 25, 2, 618);
     			attr_dev(main, "class", "svelte-177t831");
-    			add_location(main, file, 28, 0, 794);
+    			add_location(main, file, 24, 0, 609);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -10599,8 +10612,12 @@ var app = (function () {
     		m: function mount(target, anchor) {
     			insert_dev(target, main, anchor);
     			append_dev(main, p);
+    			append_dev(p, t0);
+    			append_dev(p, t1);
     		},
-    		p: noop$1,
+    		p: function update(ctx, [dirty]) {
+    			if (dirty & /*userId*/ 1) set_data_dev(t1, /*userId*/ ctx[0]);
+    		},
     		i: noop$1,
     		o: noop$1,
     		d: function destroy(detaching) {
@@ -10622,26 +10639,27 @@ var app = (function () {
     function instance($$self, $$props, $$invalidate) {
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('App', slots, []);
+    	let userId = "";
 
-    	const handleAuthStateChanged = async user => {
-    		if (user) {
-    			// User is signed in, see docs for a list of available properties
-    			// https://firebase.google.com/docs/reference/js/firebase.User
-    			user.uid;
+    	// Register an event handler when user logs in or logs out
+    	onAuthStateChanged(auth, handleAuthStateChanged);
 
-    			console.log(user);
-    		} // User is signed out
+    	const onUserLogin = user => {
+    		console.log("User logged in", user);
+    		$$invalidate(0, userId = user.uid);
     	};
 
-    	// Register an event handler
-    	onAuthStateChanged(auth, handleAuthStateChanged);
+    	const onUserLogout = () => {
+    		console.log("User logged out");
+    	};
+
+    	function handleAuthStateChanged(user) {
+    		if (user) onUserLogin(user); else onUserLogout();
+    	}
 
     	onMount(async () => {
     		
-    	}); // const userCredential = await signInWithEmailAndPassword(
-    	//   auth,
-    	//   "phocks@gmail.com",
-    	//   "password"
+    	});
 
     	const writable_props = [];
 
@@ -10652,11 +10670,22 @@ var app = (function () {
     	$$self.$capture_state = () => ({
     		onMount,
     		onAuthStateChanged,
+    		userId,
     		auth,
+    		onUserLogin,
+    		onUserLogout,
     		handleAuthStateChanged
     	});
 
-    	return [];
+    	$$self.$inject_state = $$props => {
+    		if ('userId' in $$props) $$invalidate(0, userId = $$props.userId);
+    	};
+
+    	if ($$props && "$$inject" in $$props) {
+    		$$self.$inject_state($$props.$$inject);
+    	}
+
+    	return [userId];
     }
 
     class App extends SvelteComponentDev {
