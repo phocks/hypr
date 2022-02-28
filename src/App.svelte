@@ -1,9 +1,6 @@
 <script lang="ts">
-  import "smelte/src/tailwind.css";
   import { onMount } from "svelte";
   import { onAuthStateChanged } from "firebase/auth";
-
-  import Button from "smelte/src/components/Button";
 
   // Vars
   let userId: string = "";
@@ -33,7 +30,6 @@
 
 <main>
   <p>User: {userId}</p>
-  <Button>Hello!</Button>
 </main>
 
 <style>
