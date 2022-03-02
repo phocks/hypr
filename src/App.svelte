@@ -1,24 +1,18 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { onAuthStateChanged } from "firebase/auth";
-  import Router, { link } from "svelte-spa-router";
+  import Router, { link, location } from "svelte-spa-router";
   import { wrap } from "svelte-spa-router/wrap";
+  import NotFound from "./routes/NotFound.svelte";
 
   import Home from "./routes/Home.svelte";
 
-
-
-  // Vars
-  let userId: string = "";
-
-  // Local imports
   import { auth } from "$lib/auth";
 
   const routes = {
-    // Exact path
     "/": Home,
 
-    "/:username": wrap({
+    "/user/:username": wrap({
       asyncComponent: () => import("./routes/Username.svelte"),
     }),
 
@@ -30,7 +24,7 @@
 
     // Catch-all
     // This is optional, but if present it must be the last
-    // "*": ,
+    "*": NotFound,
   };
 
   // Register an event handler when user logs in or logs out
@@ -38,7 +32,6 @@
 
   const onUserLogin = (user) => {
     console.log("User logged in", user);
-    userId = user.uid;
   };
 
   const onUserLogout = () => {
@@ -51,21 +44,24 @@
   }
 
   onMount(async () => {});
+
+  $: console.log($location);
 </script>
 
-<Router {routes} />
+<main>
+  <nav>
+    <a href="/" use:link>Home</a> - <a href="/user/phocks" use:link>User</a>
+  </nav>
+  <Router {routes} />
+</main>
 
 <style>
-  /* main {
-    text-align: center;
-    padding: 1em;
-    max-width: 240px;
-    margin: 0 auto;
+  main {
   }
 
-  @media (min-width: 640px) {
+  /* @media (min-width: 640px) {
     main {
       max-width: none;
     }
-  } */
+  }  */
 </style>

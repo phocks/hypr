@@ -1,6 +1,6 @@
 <script lang="ts">
   export let params: any = {};
-  const { username } = params;
+  // $: username = params.username;
 </script>
 
-<div>Username: {username}</div>
+<div>Username: {params.username}</div>
