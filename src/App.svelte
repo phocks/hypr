@@ -1,10 +1,12 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { onAuthStateChanged } from "firebase/auth";
-  import Router, {link} from "svelte-spa-router";
+  import Router, { link } from "svelte-spa-router";
   import { wrap } from "svelte-spa-router/wrap";
 
   import Home from "./routes/Home.svelte";
+
+
 
   // Vars
   let userId: string = "";
@@ -16,8 +18,8 @@
     // Exact path
     "/": Home,
 
-    "/user/:username": wrap({
-        asyncComponent: () => import('./routes/Username.svelte')
+    "/:username": wrap({
+      asyncComponent: () => import("./routes/Username.svelte"),
     }),
 
     // Using named parameters, with last being optional
@@ -54,7 +56,7 @@
 <Router {routes} />
 
 <style>
-  main {
+  /* main {
     text-align: center;
     padding: 1em;
     max-width: 240px;
@@ -65,5 +67,5 @@
     main {
       max-width: none;
     }
-  }
+  } */
 </style>

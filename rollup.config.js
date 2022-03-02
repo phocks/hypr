@@ -38,7 +38,7 @@ function serve() {
 export default {
   input: "src/main.ts",
   output: {
-    sourcemap: true,
+    sourcemap: !production,
     format: "esm",
     name: "app",
     dir: "public/build/",

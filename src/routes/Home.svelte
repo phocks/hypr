@@ -2,4 +2,4 @@
   import { link } from "svelte-spa-router";
 </script>
 
-<div>Home <a href="/user/test/" use:link>User</a></div>
+<div>Home <a href="/phocks" use:link>User</a></div>
