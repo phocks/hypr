@@ -44,18 +44,13 @@
   }
 
   onMount(async () => {});
-
-  $: console.log($location);
 </script>
 
 <main>
-  <nav>
-    <a href="/" use:link>Home</a> - <a href="/user/phocks" use:link>User</a>
-  </nav>
   <Router {routes} />
 </main>
 
-<style>
+<style lang="scss">
   main {
   }
 
