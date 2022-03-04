@@ -1,8 +1,10 @@
 <script lang="ts">
+  import { push } from "svelte-spa-router";
   export let params: any = {};
-  import { auth } from "$lib/auth";
 
-  import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+  import { auth } from "$lib/auth";
+  import { signInWithEmailAndPassword } from "firebase/auth";
+  import { loggedInUser } from "$lib/stores";
 
   let email: string;
   let password: string;
@@ -14,14 +16,17 @@
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
+        push("/");
         // ...
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        console.log(errorMessage)
+        console.log(errorMessage);
       });
   }
+
+  $: if ($loggedInUser) push("/");
 </script>
 
 <main>

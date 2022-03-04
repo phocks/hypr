@@ -1,14 +1,14 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { onAuthStateChanged } from "firebase/auth";
-  import Router, { link, location } from "svelte-spa-router";
+  import Router, { link, location, push } from "svelte-spa-router";
   import { wrap } from "svelte-spa-router/wrap";
 
   import Home from "./routes/Home.svelte";
 
   import { auth } from "$lib/auth";
 
-  let currentUser = null;
+  import { loggedInUser } from "$lib/stores";
 
   const routes = {
     "/": Home,
@@ -39,12 +39,12 @@
 
   const onUserLogin = (user) => {
     console.log("User logged in");
-    currentUser = user;
+    loggedInUser.set(user);
   };
 
   const onUserLogout = () => {
     console.log("User logged out");
-    currentUser = false;
+    loggedInUser.set(false);
   };
 
   function handleAuthStateChanged(user) {
@@ -53,8 +53,6 @@
   }
 
   onMount(async () => {});
-
-  $: console.log(currentUser);
 </script>
 
 <main>
@@ -64,10 +62,10 @@
     </div>
     <div />
     <div>
-      {#if currentUser === null}
+      {#if $loggedInUser === null}
         <span>Loading...</span>
-      {:else if currentUser}
-        <span>{currentUser.email}</span>
+      {:else if $loggedInUser}
+        <span>{$loggedInUser.email}</span>
       {:else}
         <a href="/login" use:link>login</a>
       {/if}
