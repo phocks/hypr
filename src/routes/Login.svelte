@@ -1,29 +1,27 @@
 <script lang="ts">
   import { push } from "svelte-spa-router";
+  import to from "await-to-js";
   export let params: any = {};
+  params;
 
   import { auth } from "$lib/auth";
-  import { signInWithEmailAndPassword } from "firebase/auth";
+  import { signInWithEmailAndPassword, UserCredential } from "firebase/auth";
   import { loggedInUser } from "$lib/stores";
 
   let email: string;
   let password: string;
 
-  function handleSubmit(event: Event) {
-    console.log(event);
+  async function handleSubmit(event: Event) {
+    const [error, userCredential] = await to(
+      signInWithEmailAndPassword(auth, email, password)
+    );
 
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        push("/");
-        // ...
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorMessage);
-      });
+    if (error) {
+      console.error(error);
+      return;
+    }
+
+    const { user } = userCredential;
   }
 
   $: if ($loggedInUser) push("/");

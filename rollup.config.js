@@ -7,6 +7,7 @@ import sveltePreprocess from "svelte-preprocess";
 import typescript from "@rollup/plugin-typescript";
 import css from "rollup-plugin-css-only";
 import alias from "@rollup/plugin-alias";
+import del from "rollup-plugin-delete";
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -44,6 +45,7 @@ export default {
     dir: "public/build/",
   },
   plugins: [
+    del({ targets: "public/build/*", runOnce: true }),
     svelte({
       preprocess: sveltePreprocess({ sourceMap: !production }),
       compilerOptions: {
