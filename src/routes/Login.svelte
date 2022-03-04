@@ -3,10 +3,12 @@
   import to from "await-to-js";
   export let params: any = {};
   params;
+  import { getAuth } from "firebase/auth";
 
-  import { auth } from "$lib/auth";
   import { signInWithEmailAndPassword, UserCredential } from "firebase/auth";
   import { loggedInUser } from "$lib/stores";
+
+  const auth = getAuth();
 
   let email: string;
   let password: string;
@@ -28,15 +30,13 @@
 </script>
 
 <main>
-  <center>
-    <div class="login-container">
-      <form on:submit|preventDefault={handleSubmit}>
-        <input bind:value={email} />
-        <input bind:value={password} type="password" />
-        <button type="submit">login</button>
-      </form>
-    </div></center
-  >
+  <div class="login-container">
+    <form on:submit|preventDefault={handleSubmit}>
+      <input bind:value={email} type="email" />
+      <input bind:value={password} type="password" />
+      <button type="submit">login</button>
+    </form>
+  </div>
 </main>
 
 <style lang="scss">

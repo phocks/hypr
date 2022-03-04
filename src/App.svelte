@@ -1,12 +1,13 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { onAuthStateChanged } from "firebase/auth";
+  import { getAuth } from "firebase/auth";
   import Router, { link, location, push } from "svelte-spa-router";
   import { wrap } from "svelte-spa-router/wrap";
 
   import Home from "./routes/Home.svelte";
 
-  import { auth } from "$lib/auth";
+  const auth = getAuth();
 
   import { loggedInUser } from "$lib/stores";
 
@@ -15,6 +16,10 @@
 
     "/login": wrap({
       asyncComponent: () => import("./routes/Login.svelte"),
+    }),
+
+    "/settings": wrap({
+      asyncComponent: () => import("./routes/Settings.svelte"),
     }),
 
     "/user/:username": wrap({
@@ -65,7 +70,7 @@
       {#if $loggedInUser === null}
         <span>Loading...</span>
       {:else if $loggedInUser}
-        <span>{$loggedInUser.email}</span>
+        <span><a href="/settings" use:link>{$loggedInUser.email}</a></span>
       {:else}
         <a href="/login" use:link>login</a>
       {/if}
@@ -86,9 +91,9 @@
       color: black;
     }
 
-    a:hover {
+    /* a:hover {
       text-decoration: none;
-    }
+    } */
   }
 
   .nav {
@@ -100,6 +105,10 @@
     margin-bottom: 1rem;
     padding-left: 1rem;
     padding-right: 1rem;
+
+    a:hover {
+      text-decoration: none;
+    }
   }
 
   .container {
