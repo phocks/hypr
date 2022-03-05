@@ -32,8 +32,8 @@
 <main>
   <div class="login-container">
     <form on:submit|preventDefault={handleSubmit}>
-      <input bind:value={email} type="email" />
-      <input bind:value={password} type="password" />
+      <input bind:value={email} type="email" name="email" />
+      <input bind:value={password} type="password" name="password" />
       <button type="submit">login</button>
     </form>
   </div>

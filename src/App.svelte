@@ -76,7 +76,10 @@
       {/if}
     </div>
   </nav>
-  <div class="container"><Router {routes} /></div>
+
+  <div class="container">
+    <Router {routes} />
+  </div>
 </main>
 
 <style lang="scss">
@@ -115,6 +118,8 @@
     padding-left: 1rem;
     padding-right: 1rem;
   }
+
+  
 
   /* @media (min-width: 640px) {
     main {
