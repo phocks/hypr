@@ -1,5 +1,5 @@
 {
-  "name": "",
+  "name": "hypr",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -10,6 +10,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/vercel": "^3.4.0",
     "astro": "^2.4.1"
   }
 }
