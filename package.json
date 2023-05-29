@@ -11,6 +11,10 @@
   },
   "dependencies": {
     "@astrojs/vercel": "^3.4.0",
+    "@prisma/client": "^4.14.1",
     "astro": "^2.4.1"
+  },
+  "devDependencies": {
+    "prisma": "^4.14.1"
   }
 }
